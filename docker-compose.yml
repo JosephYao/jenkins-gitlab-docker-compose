@@ -7,7 +7,10 @@ services:
     ports:
       - 8080:8080
       - 50000:50000
+      - 5678:5678
     container_name: jenkins
+    environment:
+      JAVA_OPTS: "-Dhudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION=true -Dhudson.remoting.ClassFilter=org.gitlab.api.models.GitlabProject,org.gitlab.api.models.GitlabNamespace,org.gitlab.api.models.GitlabPermission,org.gitlab.api.models.GitlabProjectAccessLevel,org.gitlab.api.models.GitlabUser -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5678"
     volumes:
       - ./data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
